@@ -1,26 +1,30 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import { Router } from '@reach/router'
+import TopBar from './components/TopBar'
+import Articles from './components/Articles'
+import SingleArticle from './components/SingleArticle'
+import Topics from './components/Topics'
+import ArticlesByTopic from './components/ArticlesByTopic'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css'
+
+class App extends Component {
+  render() {
+    return (
+      <div>
+        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100&display=swap" rel="stylesheet"/>
+
+        <TopBar />
+        <Router>
+          <Articles path='/articles' />
+          <SingleArticle path='/articles/:id' />
+          <Topics path='/topics'/>
+          <Articles path='/topics/:topic'/>
+        </Router>
+      </div>
+    )
+  }
 }
+
 
 export default App;
