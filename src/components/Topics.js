@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import Loading from '../components/Loading'
 import { Link } from '@reach/router'
+import '../App.css'
 
 export default class Topics extends Component {
 
@@ -22,9 +23,7 @@ export default class Topics extends Component {
             return data.topics
         })
         .then((topics) => {
-            console.log(topics)
-            this.setState({ topics })
-            this.setState({isLoading: false})
+            this.setState({ topics, isLoading: false })
         })
     }
 
@@ -36,15 +35,15 @@ export default class Topics extends Component {
         else return (
             <div>
                 <h2>Topics</h2>
-                <ul>
+                <ul className="topicsList">
                     {this.state.topics.map((topic => {
-                        return <li key={topic.slug}>
-                        <Link to={`/topics/${topic.slug}`}>
-                            {topic.slug}</Link>
-                            <br></br>
-                            <br></br>
-                        
-                        </li>
+                        return <Link to={`/topics/${topic.slug}`} className="topicsListItem">
+                            <li key={topic.slug} className="topicsListItem">
+                                <br></br>
+                                {topic.slug}
+                                <br></br>
+                            </li>
+                        </Link>
                     }))}
                 </ul>
             </div>

@@ -1,5 +1,8 @@
 import axios from 'axios'
 
+
+
+///// THIS WON'T WORK FOR TOPICS cuz Back End is long   
 export function fetchArticles (params) {
     console.log(params)
     // value of topic is going to get passed in 

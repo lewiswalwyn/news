@@ -1,3 +1,44 @@
 div {
     font-family: 'Roboto Slab', serif;
 }
+
+.articlesList, .articlesList:visited, .articlesList:active {
+    list-style-type: none;
+    color: black
+}
+
+.articlesLink, .articlesLink:visited, .articlesLink:active {
+    list-style-type: none;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    transition: 0.1s ease;
+}
+
+.articlesLink:hover {
+    color: black;
+    background-color: rgb(237, 237, 237);
+    font-size: x-large;
+    transition: 0.4s ease;
+}
+
+
+.topicsList {
+    list-style-type: none;
+    color: black
+}
+
+.topicsListItem, .topicsListItem:visited, .topicsListItem:active {
+    list-style-type: none;
+    text-decoration: none;
+    color: black;
+    background-color: white;
+    transition: 0.1s ease;
+}
+
+.topicsListItem:hover {
+    color: black;
+    background-color: rgb(237, 237, 237);
+    font-size: x-large;
+    transition: 0.3s ease;
+}

@@ -1,0 +1,17 @@
+div {
+    grid-column: 3;
+    
+}
+
+button, button:visited, button:active {
+    border-color: black;
+    color: black;
+    text-decoration: none;
+    transition: 0.4s;
+    width: 90%;
+}
+
+button:hover {
+    background-color: black;
+    color: white;
+}
