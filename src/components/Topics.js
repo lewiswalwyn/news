@@ -37,8 +37,8 @@ export default class Topics extends Component {
                 <h2>Topics</h2>
                 <ul className="topicsList">
                     {this.state.topics.map((topic => {
-                        return <Link to={`/topics/${topic.slug}`} className="topicsListItem">
-                            <li key={topic.slug} className="topicsListItem">
+                        return <Link to={`/topics/${topic.slug}`} key={topic.slug} className="topicsListItem">
+                            <li className="topicsListItem">
                                 <br></br>
                                 {topic.slug}
                                 <br></br>

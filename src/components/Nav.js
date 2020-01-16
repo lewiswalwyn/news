@@ -5,6 +5,10 @@ import './Nav.css'
 export default function Nav() {
     return (
         <div>
+            <Link to={`/login`} className="buttonLink">
+                <button>login</button>
+                </Link>  
+
             <Link to={`/articles`} className="buttonLink">
                 <button> articles </button>
                 </Link>
@@ -12,6 +16,7 @@ export default function Nav() {
             <Link to={`/topics`} className="buttonLink">
                 <button>topics</button>
                 </Link>
+
         </div>
     )
 }

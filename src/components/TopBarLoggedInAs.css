@@ -1,0 +1,6 @@
+p {
+    grid-column-start: 2;
+    grid-column-end: 2;
+    text-align: right;
+    padding: 8px 20px 0px 0px;
+}

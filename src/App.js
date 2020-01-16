@@ -4,22 +4,32 @@ import TopBar from './components/TopBar'
 import Articles from './components/Articles'
 import SingleArticle from './components/SingleArticle'
 import Topics from './components/Topics'
-import ArticlesByTopic from './components/ArticlesByTopic'
+import LoginPage from './components/LoginPage'
 
 import './App.css'
 
 class App extends Component {
+
+  state = {
+    user: "jessjelly"
+  }
+
   render() {
+
+    const user = this.state.user
+    
     return (
       <div>
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100&display=swap" rel="stylesheet"/>
+        <link href="https://fonts.googleapis.com/css?family=Montserrat:100&display=swap" rel="stylesheet"/>
 
-        <TopBar />
+        <TopBar user={user}/>
         <Router>
-          <Articles path='/articles' />
-          <SingleArticle path='/articles/:id' />
-          <Topics path='/topics'/>
-          <Articles path='/topics/:topic'/>
+          <Articles path='/articles' user={user}/>
+          <SingleArticle path='/articles/:id' user={user}/>
+          <Topics path='/topics' user={user}/>
+          <Articles path='/topics/:topic' user={user}/>
+          <LoginPage path='/login' user={user}/>
         </Router>
       </div>
     )

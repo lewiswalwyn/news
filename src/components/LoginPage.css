@@ -1,0 +1,8 @@
+div {
+    grid-template-areas: "a";
+}
+
+h1 {
+    grid-template-areas: a;
+    text-align: center;
+}
