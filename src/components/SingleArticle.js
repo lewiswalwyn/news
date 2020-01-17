@@ -4,6 +4,8 @@ import Loading from './Loading'
 import ArticleBallotBox from './ArticleBallotBox'
 import CommentBallotBox from './CommentBallotBox'
 import * as api from '../api'
+import '../App.css'
+import ErrorDisplayer from './ErrorDisplayer'
 
 export default class SingleArticle extends Component {
 
@@ -11,7 +13,8 @@ export default class SingleArticle extends Component {
         article: {},
         comments: [],
         isLoading: true,
-        newComment: ''
+        newComment: '',
+        err: ''
     }
 
     componentDidMount() {
@@ -28,6 +31,10 @@ export default class SingleArticle extends Component {
             this.setState({ article })
             this.setState({ isLoading: false})
         })
+        .catch((err) => {
+            this.setState({ err, isLoading: false })
+            console.dir(err)
+        })
     }
 
     fetchComments() {
@@ -36,7 +43,10 @@ export default class SingleArticle extends Component {
             return data.comments
         })
         .then((comments) => {
-            this.setState({ comments})
+            this.setState({ comments })
+        })
+        .catch((err) => {
+                this.setState({err, isLoading: false})
         })
     }
 
@@ -58,17 +68,23 @@ export default class SingleArticle extends Component {
             return <Loading />
         }
 
+        else if (this.state.err.response) {
+            return <ErrorDisplayer err={this.state.err}/>
+        }
+
         else return (
                 <div>
                     <h2>{this.state.article.title}</h2>
-                    <p>{this.state.article.body}</p>
+                    <p class="ArticleText">{this.state.article.body}</p>
                     <br></br>
                     <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes}/>
                     <br></br>
 
                     <h3>Post Comment:</h3>
                     <form onSubmit={this.handleSubmit}>
-                    <input type="text" onChange={this.handleChange} value={this.state.newComment} placeholder="comment here"></input><button type="submit">submit</button>
+                    <input type="text" onChange={this.handleChange} value={this.state.newComment} placeholder="comment here" className="CommentInput"></input>
+                    <br></br>
+                    <button type="submit" className="SubmitCommentButton" disabled={!this.state.newComment.length}>submit</button>
                     </form>
 
                     <h3>Comments:</h3>

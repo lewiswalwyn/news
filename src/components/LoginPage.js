@@ -5,7 +5,7 @@ export default class LoginPage extends Component {
     render() {
         return (
             <div>
-                <h1 >some placeholder text</h1>
+    <h1 >you are logged in as {this.props.user}</h1>
 
                 <nav role="navigation">
                     {/* <ul>

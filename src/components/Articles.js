@@ -4,21 +4,19 @@ import * as api from '../api'
 import { Link } from '@reach/router'
 import '../App.css'
 import ArticleBallotBox from './ArticleBallotBox'
+import ErrorDisplayer from './ErrorDisplayer'
 
 export default class Articles extends Component {
 
     state = {
         articles: [],
-        isLoading: true
+        isLoading: true,
+        err: {}
     }
-
-    
 
     componentDidMount() {
         this.fetchContent()
     }
-
-
 
     fetchContent() {
         // parametric endpoint from router props
@@ -26,6 +24,9 @@ export default class Articles extends Component {
         .then((articles) => {
             this.setState({ articles, isLoading: false })
         })
+        .catch((err) => {
+            this.setState({err, isLoading: false})
+    })
     }
 
     sortByVotes() {
@@ -52,12 +53,13 @@ export default class Articles extends Component {
         )
     }
 
-
-
-
     render() {
         if (this.state.isLoading) {
             return <Loading />
+        }
+
+        if (this.state.err.response) {
+            return <ErrorDisplayer err={this.state.err}/>
         }
 
         else return (
@@ -89,4 +91,3 @@ export default class Articles extends Component {
             )
         }
     }
-

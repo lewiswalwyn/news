@@ -42,3 +42,15 @@ div {
     font-size: x-large;
     transition: 0.3s ease;
 }
+
+.ArticleText {
+    text-align: left;
+}
+
+.CommentInput {
+    width: 30%;
+}
+
+.SubmitCommentButton {
+    width: 30%;
+}

@@ -3,12 +3,14 @@ import axios from 'axios';
 import Loading from '../components/Loading'
 import { Link } from '@reach/router'
 import '../App.css'
+import ErrorDisplayer from './ErrorDisplayer'
 
 export default class Topics extends Component {
 
     state = {
         topics: [],
-        isLoading: true
+        isLoading: true,
+        err: ''
     }
 
     componentDidMount() {
@@ -25,11 +27,18 @@ export default class Topics extends Component {
         .then((topics) => {
             this.setState({ topics, isLoading: false })
         })
+        .catch((err) => {
+            this.setState({err, isLoading: false})
+        })
     }
 
     render() {
         if(this.state.isLoading) {
             return <Loading />
+        }
+
+        if (this.state.err.response) {
+            return <ErrorDisplayer err={this.state.err}/>
         }
 
         else return (
