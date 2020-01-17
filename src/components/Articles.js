@@ -3,7 +3,7 @@ import Loading from './Loading';
 import * as api from '../api'
 import { Link } from '@reach/router'
 import '../App.css'
-import ArticleBallotBox from './ArticleBallotBox'
+// import ArticleBallotBox from './ArticleBallotBox'
 import ErrorDisplayer from './ErrorDisplayer'
 
 export default class Articles extends Component {
@@ -53,6 +53,19 @@ export default class Articles extends Component {
         )
     }
 
+    // voteChange = (articleID, direction) => {
+    //     const articleIndex = this.state.articles.indexOf(this.state.articles.find(article => article.article_id === articleID))
+
+    //     if(direction === 1) {
+    //         this.setState(prevState => { return { [prevState.articles[articleIndex].votes]: prevState.articles[articleIndex].votes++ }})
+    //         } 
+    //     else if(direction === -1) {
+    //         this.setState(prevState => { return { [prevState.articles[articleIndex].votes]: prevState.articles[articleIndex].votes-- }})
+    //         } 
+
+    //     api.updateCommentVotes(articleID, direction)
+    // }
+
     render() {
         if (this.state.isLoading) {
             return <Loading />
@@ -82,7 +95,9 @@ export default class Articles extends Component {
                                     <br></br>
                                     comment count : {article.comment_count}
                                     <br></br>
-                                    <ArticleBallotBox articleID={article.article_id} votes={article.votes}/>
+                                    votes: {article.votes}
+                                    <br></br>
+                                    {/* <ArticleBallotBox articleID={article.article_id} votes={article.votes} func={this.voteChange}/> */}
                                     <br></br>
                                 </li></Link>
                         })}

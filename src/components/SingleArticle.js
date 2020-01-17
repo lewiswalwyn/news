@@ -52,14 +52,59 @@ export default class SingleArticle extends Component {
 
     handleChange = (event) => {
        this.setState({newComment: event.target.value})
-       console.log(event.target.value)
-       console.log(this.state.newComment)
     }
 
     handleSubmit = (event) => {
         event.preventDefault()
         api.postComment(this.props.user, this.state.newComment, this.state.article.article_id)
+        .then(response => {
+             this.setState(prevState => ({ comments: [response, ...prevState.comments] }))
+        })
     }
+
+    handleDelete = (commentid) => {
+        console.log(commentid, "plzzzzzzz")
+        console.log()
+        api.deleteComment(commentid)
+        const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentid))
+        const nuComments = [...this.state.comments]
+        nuComments.splice(commentIndex, 1)
+        this.setState({comments: nuComments})
+    }
+
+    CommentVoteChange = (commentID, direction) => {
+
+        const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentID))
+
+        if(direction === 1) {
+            this.setState(prevState => { return { [prevState.comments[commentIndex].votes]: prevState.comments[commentIndex].votes++ }})
+            } 
+        else if(direction === -1) {
+            this.setState(prevState => { return { [prevState.comments[commentIndex].votes]: prevState.comments[commentIndex].votes-- }})
+            } 
+
+        api.updateCommentVotes(commentID, direction)
+    }
+
+    ArticleVoteChange = (articleID, direction) => {
+        // const articleIndex = this.state.articles.indexOf(this.state.articles.find(article => article.article_id === articleID))
+
+        // console.log()
+
+        if(direction === 1) {
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++ }})
+            } 
+        else if(direction === -1) {
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes-- }})
+            } 
+
+        api.updateArticleVotes(articleID, direction)
+    }
+
+
+
+
+
 
 
 
@@ -77,7 +122,7 @@ export default class SingleArticle extends Component {
                     <h2>{this.state.article.title}</h2>
                     <p class="ArticleText">{this.state.article.body}</p>
                     <br></br>
-                    <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes}/>
+                    <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes} func={this.ArticleVoteChange}/>
                     <br></br>
 
                     <h3>Post Comment:</h3>
@@ -95,9 +140,10 @@ export default class SingleArticle extends Component {
                                     <br></br>
                                     - <i>{comment.body}</i>
                                     <br></br>
-                                    <CommentBallotBox commentID={comment.comment_id} votes={comment.votes} />
+                                    <CommentBallotBox commentID={comment.comment_id} votes={comment.votes} func={this.CommentVoteChange}/>
                                     <br></br>
-                                    {comment.author === this.props.user && <button onClick={() => api.deleteComment(comment.comment_id)}>△ delete your comment △</button>}  
+                                    {console.log(comment.comment_id, "<-- comment id")}
+                                    {comment.author === this.props.user && <button onClick={() => this.handleDelete(comment.comment_id)} commentID={comment.comment_id}>△ delete your comment △</button>}  
                                     <br></br>
                                     <br></br>
                                 </li>
