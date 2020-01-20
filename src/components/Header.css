@@ -1,3 +1,4 @@
 .MyHeader {
     grid-column: 1;
+    grid-area: a;
 }

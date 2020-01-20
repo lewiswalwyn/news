@@ -1,6 +1,6 @@
 div {
     grid-column: 3;
-    
+    grid-area: c;
 }
 
 button, button:visited, button:active {

@@ -3,6 +3,6 @@ import './TopBarLoggedInAs.css'
 
 export default function TopBarLoggedInAs(props) {
     return (
-            <p>you are logged in as <i>{props.user}</i></p>
+            <p className="LoggedInAs">you are logged in as <i>{props.user}</i></p>
     )
 }

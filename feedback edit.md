@@ -12,13 +12,13 @@
 
 * You should limit your votes to one in either direction.
 
---- working but looks gross once voted
+--- DONE
 
 ## Error Handling
 
 * Tell the user they can't post an empty comment when they try
 
---- works but looks gross
+--- DONE
 
 ## Code
 
@@ -50,7 +50,7 @@
 --- 
 
 * *SingleArticle.js:* `CommentVoteChange` could also be made nicer. Direction is already a number we can do maths with.
---- made this cleaner for articleVoteChange but it's messed up the render.....
+--- DONE
 
 * Methods should be camelCase. Only components are capitalised.
 --- DONE

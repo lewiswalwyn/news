@@ -97,7 +97,7 @@ export default class SingleArticle extends Component {
 
         const nuVotes = this.state.article.votes + direction
 
-        this.setState((prevState) => { return {...prevState, article : {votes: nuVotes}}})
+        this.setState((prevState) => { return {...prevState, [prevState.article.votes]: nuVotes}})
   
         api.updateArticleVotes(articleID, direction)
         .catch(() => {

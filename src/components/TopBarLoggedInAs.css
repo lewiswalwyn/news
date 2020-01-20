@@ -1,4 +1,4 @@
-p {
+.LoggedInAs {
     grid-column-start: 2;
     grid-column-end: 2;
     text-align: right;
