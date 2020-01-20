@@ -15,7 +15,6 @@ export default class Topics extends Component {
 
     componentDidMount() {
         this.fetchContent()
-        
     }
 
     fetchContent() {

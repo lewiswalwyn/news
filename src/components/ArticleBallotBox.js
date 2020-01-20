@@ -18,19 +18,26 @@ export default class ArticleBallotBox extends Component {
     render() {
         return (
             <div className="container">
+                {this.props.articleVoted ? <h1>you voted and it broke my styling</h1>: null}
                 <h4 className="votecount">article votes : {this.props.votes} &nbsp;</h4>
-                <button onClick={
-                    () => this.props.func(this.props.articleID, 1)}
 
-                    className="up">
+                
+
+
+                <button onClick={() => this.props.func(this.props.articleID, 1)}
+                    className="up" disabled={this.props.articleVoted}
+                    >
                         △
                         </button>
 
                 <button onClick={
                     () => this.props.func(this.props.articleID, -1)} 
-                    className="down">
+                    className="down" disabled={this.props.articleVoted}
+                    >
                         ▽
                         </button>
+    
+                
             </div>
         )
     }

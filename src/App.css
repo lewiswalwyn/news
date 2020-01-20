@@ -15,6 +15,10 @@ div {
     transition: 0.1s ease;
 }
 
+.commentsList {
+    list-style-type: none;
+}
+
 .articlesLink:hover {
     color: black;
     background-color: rgb(237, 237, 237);

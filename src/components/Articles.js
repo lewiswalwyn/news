@@ -29,6 +29,19 @@ export default class Articles extends Component {
     })
     }
 
+    componentDidUpdate(prevProps, prevState) {
+
+        if( this.props !== prevProps ) {
+        return api.fetchArticles({topic: this.props.topic || null})
+        .then((articles) => {
+            this.setState({ articles, isLoading: false })
+        })
+        .catch((err) => {
+            this.setState({err, isLoading: false})
+        })
+        }
+    }
+
     sortByVotes() {
         this.setState({ articles : this.state.articles.sort(
             (b, a) => { 

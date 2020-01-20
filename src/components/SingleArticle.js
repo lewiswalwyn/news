@@ -14,7 +14,9 @@ export default class SingleArticle extends Component {
         comments: [],
         isLoading: true,
         newComment: '',
-        err: ''
+        err: '',
+        articleVoted: false,
+        noComment: false
     }
 
     componentDidMount() {
@@ -63,8 +65,6 @@ export default class SingleArticle extends Component {
     }
 
     handleDelete = (commentid) => {
-        console.log(commentid, "plzzzzzzz")
-        console.log()
         api.deleteComment(commentid)
         const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentid))
         const nuComments = [...this.state.comments]
@@ -89,19 +89,24 @@ export default class SingleArticle extends Component {
     ArticleVoteChange = (articleID, direction) => {
         // const articleIndex = this.state.articles.indexOf(this.state.articles.find(article => article.article_id === articleID))
 
-        // console.log()
-
         if(direction === 1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++ }})
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
             } 
         else if(direction === -1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes-- }})
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
             } 
 
-        api.updateArticleVotes(articleID, direction)
+
+        api.updateArticleVotes(articleID, direction).catch(() => {
+            // something to undo the optimistic rendering if this function fails
+        })
+
+        console.log(this.state.articleVoted)
     }
 
-
+    ifNoComment = () => {
+        this.setState({noComment: true});
+    }
 
 
 
@@ -122,18 +127,22 @@ export default class SingleArticle extends Component {
                     <h2>{this.state.article.title}</h2>
                     <p class="ArticleText">{this.state.article.body}</p>
                     <br></br>
-                    <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes} func={this.ArticleVoteChange}/>
+                    <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes} func={this.ArticleVoteChange} articleVoted={this.state.articleVoted}/>
                     <br></br>
 
                     <h3>Post Comment:</h3>
                     <form onSubmit={this.handleSubmit}>
                     <input type="text" onChange={this.handleChange} value={this.state.newComment} placeholder="comment here" className="CommentInput"></input>
                     <br></br>
-                    <button type="submit" className="SubmitCommentButton" disabled={!this.state.newComment.length}>submit</button>
+                    {this.state.noComment ? <p text-align="left"><i>you must fill in the box first</i></p>: null}
+
+                    <button type="submit" className="SubmitCommentButton" onClick={!this.state.newComment.length ? this.ifNoComment: null} 
+                    // disabled={!this.state.newComment.length}
+                    >submit</button>
                     </form>
 
                     <h3>Comments:</h3>
-                    <ul>
+                    <ul className="commentsList">
                         {this.state.comments.map((comment) => {
                             return <li key={comment.comment_id}>
                                     <b>{comment.author}</b>
@@ -142,7 +151,6 @@ export default class SingleArticle extends Component {
                                     <br></br>
                                     <CommentBallotBox commentID={comment.comment_id} votes={comment.votes} func={this.CommentVoteChange}/>
                                     <br></br>
-                                    {console.log(comment.comment_id, "<-- comment id")}
                                     {comment.author === this.props.user && <button onClick={() => this.handleDelete(comment.comment_id)} commentID={comment.comment_id}>△ delete your comment △</button>}  
                                     <br></br>
                                     <br></br>

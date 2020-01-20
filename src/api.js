@@ -29,7 +29,6 @@ export function deleteComment (commentID) {
 }
 
 export function postComment (username, body, articleID) {
-    console.log(username, body, articleID)
     return axios.post(`https://lewis-nc-news.herokuapp.com/api/articles/${articleID}/comments`,
     {username: username, body: body})
     .then(({data}) => {
