@@ -22,8 +22,6 @@ class App extends Component {
     
     return (
       <div>
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:100&display=swap" rel="stylesheet"/>
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:100&display=swap" rel="stylesheet"/>
 
         <TopBar user={user}/>
 

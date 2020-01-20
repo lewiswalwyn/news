@@ -3,7 +3,6 @@ import Loading from './Loading';
 import * as api from '../api'
 import { Link } from '@reach/router'
 import '../App.css'
-// import ArticleBallotBox from './ArticleBallotBox'
 import ErrorDisplayer from './ErrorDisplayer'
 
 export default class Articles extends Component {
@@ -18,36 +17,27 @@ export default class Articles extends Component {
         this.fetchContent()
     }
 
-    fetchContent() {
-        // parametric endpoint from router props
-        return api.fetchArticles({topic: this.props.topic || null})
-        .then((articles) => {
-            this.setState({ articles, isLoading: false })
-        })
-        .catch((err) => {
-            this.setState({err, isLoading: false})
-    })
-    }
-
     componentDidUpdate(prevProps, prevState) {
 
-        if( this.props !== prevProps ) {
-        return api.fetchArticles({topic: this.props.topic || null})
-        .then((articles) => {
-            this.setState({ articles, isLoading: false })
-        })
-        .catch((err) => {
-            this.setState({err, isLoading: false})
-        })
+        console.log(this.props.uri, "<-- this props uri")
+        console.log(prevProps.uri, "<-- prevProps uri")
+
+        if( this.props.uri !== prevProps.uri ) {
+            this.fetchContent()
         }
     }
 
-    sortByVotes() {
-        this.setState({ articles : this.state.articles.sort(
-            (b, a) => { 
-                return a.votes - b.votes }
-            )}
-        )
+    fetchContent(sort_by) {
+        console.log("stop trying to make fetch happen it's not going to happen")
+
+        return api.fetchArticles({topic: this.props.topic || null, sort_by: sort_by})
+        .then((articles) => {
+            this.setState({ articles, isLoading: false, err: {} })
+            console.log("state set")
+        })
+        .catch((err) => {
+            this.setState({err, isLoading: false})
+        })
     }
 
     sortByCommentCount() {
@@ -66,19 +56,6 @@ export default class Articles extends Component {
         )
     }
 
-    // voteChange = (articleID, direction) => {
-    //     const articleIndex = this.state.articles.indexOf(this.state.articles.find(article => article.article_id === articleID))
-
-    //     if(direction === 1) {
-    //         this.setState(prevState => { return { [prevState.articles[articleIndex].votes]: prevState.articles[articleIndex].votes++ }})
-    //         } 
-    //     else if(direction === -1) {
-    //         this.setState(prevState => { return { [prevState.articles[articleIndex].votes]: prevState.articles[articleIndex].votes-- }})
-    //         } 
-
-    //     api.updateCommentVotes(articleID, direction)
-    // }
-
     render() {
         if (this.state.isLoading) {
             return <Loading />
@@ -92,9 +69,9 @@ export default class Articles extends Component {
                 <div>
                     <h2>Articles</h2>
                     <nav> Sort By: <br></br>
-                        <button onClick={this.sortByDate.bind(this)}>Date Created</button> 
-                        <button onClick={this.sortByCommentCount.bind(this)}>Most Commented</button> 
-                        <button onClick={this.sortByVotes.bind(this)}>Votes</button>
+                        <button onClick={() => {this.fetchContent("created_at")}}>Date Created</button> 
+                        <button onClick={() => {this.fetchContent("comment_count")}}>Most Commented</button> 
+                        <button onClick={() => {this.fetchContent("votes")}}>Votes</button>
                     </nav>
                     <ul className="articlesList">
                         {this.state.articles.map((article) => {
@@ -110,7 +87,6 @@ export default class Articles extends Component {
                                     <br></br>
                                     votes: {article.votes}
                                     <br></br>
-                                    {/* <ArticleBallotBox articleID={article.article_id} votes={article.votes} func={this.voteChange}/> */}
                                     <br></br>
                                 </li></Link>
                         })}

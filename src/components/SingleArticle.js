@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import axios from 'axios'
 import Loading from './Loading'
-import ArticleBallotBox from './ArticleBallotBox'
-import CommentBallotBox from './CommentBallotBox'
+import BallotBox from './BallotBox'
 import * as api from '../api'
 import '../App.css'
 import ErrorDisplayer from './ErrorDisplayer'
@@ -15,7 +14,6 @@ export default class SingleArticle extends Component {
         isLoading: true,
         newComment: '',
         err: '',
-        articleVoted: false,
         noComment: false
     }
 
@@ -72,7 +70,7 @@ export default class SingleArticle extends Component {
         this.setState({comments: nuComments})
     }
 
-    CommentVoteChange = (commentID, direction) => {
+    commentVoteChange = (commentID, direction) => {
 
         const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentID))
 
@@ -86,22 +84,24 @@ export default class SingleArticle extends Component {
         api.updateCommentVotes(commentID, direction)
     }
 
-    ArticleVoteChange = (articleID, direction) => {
-        // const articleIndex = this.state.articles.indexOf(this.state.articles.find(article => article.article_id === articleID))
+    articleVoteChange = (articleID, direction) => {
 
-        if(direction === 1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
-            } 
-        else if(direction === -1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
-            } 
+        // if(direction === 1) {
+        //     this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
+        //     } 
+        // else if(direction === -1) {
+        //     this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
+        //     } 
 
+        const nuVotes = this.state.article.votes + direction
 
-        api.updateArticleVotes(articleID, direction).catch(() => {
-            // something to undo the optimistic rendering if this function fails
+        this.setState((prevState) => { return {...prevState, article : {votes: nuVotes}}})
+  
+        api.updateArticleVotes(articleID, direction)
+        .catch(() => {
+            // OI do something to undo the optimistic rendering if this function fails!!
         })
 
-        console.log(this.state.articleVoted)
     }
 
     ifNoComment = () => {
@@ -127,7 +127,7 @@ export default class SingleArticle extends Component {
                     <h2>{this.state.article.title}</h2>
                     <p class="ArticleText">{this.state.article.body}</p>
                     <br></br>
-                    <ArticleBallotBox articleID={this.state.article.article_id} votes={this.state.article.votes} func={this.ArticleVoteChange} articleVoted={this.state.articleVoted}/>
+                    <BallotBox currID={this.state.article.article_id} votes={this.state.article.votes} func={this.articleVoteChange} />
                     <br></br>
 
                     <h3>Post Comment:</h3>
@@ -137,7 +137,6 @@ export default class SingleArticle extends Component {
                     {this.state.noComment ? <p text-align="left"><i>you must fill in the box first</i></p>: null}
 
                     <button type="submit" className="SubmitCommentButton" onClick={!this.state.newComment.length ? this.ifNoComment: null} 
-                    // disabled={!this.state.newComment.length}
                     >submit</button>
                     </form>
 
@@ -149,7 +148,7 @@ export default class SingleArticle extends Component {
                                     <br></br>
                                     - <i>{comment.body}</i>
                                     <br></br>
-                                    <CommentBallotBox commentID={comment.comment_id} votes={comment.votes} func={this.CommentVoteChange}/>
+                                    <BallotBox currID={comment.comment_id} votes={comment.votes} func={this.commentVoteChange}/>
                                     <br></br>
                                     {comment.author === this.props.user && <button onClick={() => this.handleDelete(comment.comment_id)} commentID={comment.comment_id}>△ delete your comment △</button>}  
                                     <br></br>

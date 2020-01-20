@@ -6,13 +6,13 @@
 
 * You need a componentDidUpdate to fetch articles when the props change (i.e. going from a bad topic error to all articles)
 
----stuck
+--- DONE
 
 ### Individual Article / Comments
 
 * You should limit your votes to one in either direction.
 
---- mostly working, just looks gross
+--- working, (so far just for article voting) but looks gross once voted
 
 ## Error Handling
 
@@ -23,18 +23,43 @@
 ## Code
 
 * move the stylesheet links to the `head` in your index.html
+--- DONE
+
 * the BallotBoxes are almost identical for comments and articles. This is a perfect opportunity to practise **r E u S a B i L i T y**
+----- hold voted? in state of ballot box instead of above tier
+
 * Same as above for Articles and ArticlesByTopic (I think you've already done this tbf. Delete the obsolete component)
+--- DONE
+
 * remove console.logs
+--- DONE
+
 * *Articles.js:* sorting should be handled by your API, not `.sort`
+--- DONE
+
 * Sorting functionality could be extracted into its own component to keep `Articles` light.
+--- has become a smaller/non issue after sorting via api?
+
 * remove commented out code
+--- DONE
+
 *  Extract comments functionality to its own component.
+--- 
+
 * *SingleArticle.js:* `handleDelete` is a little convoluted. Try and slim it down.
+--- 
+
 * *SingleArticle.js:* `CommentVoteChange` could also be made nicer. Direction is already a number we can do maths with.
+--- made this cleaner for articleVoteChange but it's messed up the render.....
+
 * Methods should be camelCase. Only components are capitalised.
+--- DONE
+
 * no to`<br/>`s!!! CSS instead
+--- 
+
 * remove unnecessary files
+--- 
 
 ## MAKE SURE ALL TESTS ARE STILL PASSING IN BACK END
 
