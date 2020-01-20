@@ -12,7 +12,7 @@
 
 * You should limit your votes to one in either direction.
 
---- working, (so far just for article voting) but looks gross once voted
+--- working but looks gross once voted
 
 ## Error Handling
 
@@ -26,7 +26,7 @@
 --- DONE
 
 * the BallotBoxes are almost identical for comments and articles. This is a perfect opportunity to practise **r E u S a B i L i T y**
------ hold voted? in state of ballot box instead of above tier
+----- DONE
 
 * Same as above for Articles and ArticlesByTopic (I think you've already done this tbf. Delete the obsolete component)
 --- DONE
