@@ -47,7 +47,7 @@
 --- DONE
 
 * *SingleArticle.js:* `handleDelete` is a little convoluted. Try and slim it down.
---- 
+--- DONE
 
 * *SingleArticle.js:* `CommentVoteChange` could also be made nicer. Direction is already a number we can do maths with.
 --- DONE
@@ -69,4 +69,4 @@
 - [ ] Use `aXe` extension to check for a11y issues
 - [ ] Make sure any pure functions are extracted and tested with `Jest`
 - [ ] Add integration tests with `cypress`
-- [ ] Use Context API for sharing logged in user amongst components
+- [ ] Use Context API for sharing logged in user amongst components 

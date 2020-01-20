@@ -64,12 +64,11 @@ export default class SingleArticle extends Component {
     }
 
     handleDelete = (commentid) => {
+
         api.deleteComment(commentid)
 
-        const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentid))
         const nuComments = [...this.state.comments]
-        nuComments.splice(commentIndex, 1)
-        this.setState({comments: nuComments})
+        this.setState({comments: nuComments.filter(comment => comment.comment_id !== commentid)})
     }
 
     commentVoteChange = (commentID, direction) => {
