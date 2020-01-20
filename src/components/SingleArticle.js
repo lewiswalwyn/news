@@ -5,6 +5,7 @@ import BallotBox from './BallotBox'
 import * as api from '../api'
 import '../App.css'
 import ErrorDisplayer from './ErrorDisplayer'
+import CommentBox from './CommentBox'
 
 export default class SingleArticle extends Component {
 
@@ -58,12 +59,13 @@ export default class SingleArticle extends Component {
         event.preventDefault()
         api.postComment(this.props.user, this.state.newComment, this.state.article.article_id)
         .then(response => {
-             this.setState(prevState => ({ comments: [response, ...prevState.comments] }))
+             this.setState(prevState => ({ comments: [response, ...prevState.comments], newComment: '' }))
         })
     }
 
     handleDelete = (commentid) => {
         api.deleteComment(commentid)
+
         const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentid))
         const nuComments = [...this.state.comments]
         nuComments.splice(commentIndex, 1)
@@ -130,6 +132,14 @@ export default class SingleArticle extends Component {
                     <BallotBox currID={this.state.article.article_id} votes={this.state.article.votes} func={this.articleVoteChange} />
                     <br></br>
 
+                    <CommentBox 
+                    handleSubmit={this.handleSubmit} 
+                    handleChange={this.handleChange} 
+                    newComment={this.state.newComment} 
+                    noComment={this.state.noComment} 
+                    ifNoComment={this.ifNoComment}
+                    />
+{/* 
                     <h3>Post Comment:</h3>
                     <form onSubmit={this.handleSubmit}>
                     <input type="text" onChange={this.handleChange} value={this.state.newComment} placeholder="comment here" className="CommentInput"></input>
@@ -138,7 +148,8 @@ export default class SingleArticle extends Component {
 
                     <button type="submit" className="SubmitCommentButton" onClick={!this.state.newComment.length ? this.ifNoComment: null} 
                     >submit</button>
-                    </form>
+                    </form> */}
+
 
                     <h3>Comments:</h3>
                     <ul className="commentsList">

@@ -44,7 +44,7 @@
 --- DONE
 
 *  Extract comments functionality to its own component.
---- 
+--- DONE
 
 * *SingleArticle.js:* `handleDelete` is a little convoluted. Try and slim it down.
 --- 
@@ -62,6 +62,7 @@
 --- 
 
 ## MAKE SURE ALL TESTS ARE STILL PASSING IN BACK END
+--- DONE
 
 ## Once everything else is complete, here are some extra challenges:
 
