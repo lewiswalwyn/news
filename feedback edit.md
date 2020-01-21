@@ -50,7 +50,7 @@
 --- DONE
 
 * *SingleArticle.js:* `CommentVoteChange` could also be made nicer. Direction is already a number we can do maths with.
---- DONE
+---- DONE ---- undone
 
 * Methods should be camelCase. Only components are capitalised.
 --- DONE

@@ -58,3 +58,66 @@ div {
 .SubmitCommentButton {
     width: 30%;
 }
+
+
+
+
+
+
+.dropbtn {
+    background-color: white;
+    color: black;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    width: 100vw;
+    transition: 0.2s;
+    outline-style:none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    transition: 0.7s;
+    outline-style:none;
+    width: 100vw;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: white;
+    min-width: 200px;
+    width: 100vw;
+    transition: 0.7s;
+    outline-style:none;
+}
+
+.dropdown-content button {
+    color: black;
+    padding: 12px 12px;
+    text-decoration: none;
+    display: block;
+    width: 100vw;
+    transition: 0.7s;
+    outline-style:none;
+}
+
+.dropdown-content button:hover {
+    transition: 0.7s;
+    background-color: black;
+    color: white;
+    width: 100vw;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+    transition: 0.7s;
+    width: 100vw;
+}
+.dropdown:hover .dropbtn {
+    background-color: black;
+    color: white;
+    transition: 0.2s;
+    outline-style:none;
+    width: 100vw;
+}

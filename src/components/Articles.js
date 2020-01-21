@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import Loading from './Loading';
 import * as api from '../api'
 import { Link } from '@reach/router'
-import '../App.css'
 import ErrorDisplayer from './ErrorDisplayer'
+import Sorter from './Sorter'
+import '../App.css'
 
 export default class Articles extends Component {
 
@@ -19,21 +20,16 @@ export default class Articles extends Component {
 
     componentDidUpdate(prevProps, prevState) {
 
-        console.log(this.props.uri, "<-- this props uri")
-        console.log(prevProps.uri, "<-- prevProps uri")
-
         if( this.props.uri !== prevProps.uri ) {
             this.fetchContent()
         }
     }
 
     fetchContent(sort_by) {
-        console.log("stop trying to make fetch happen it's not going to happen")
 
         return api.fetchArticles({topic: this.props.topic || null, sort_by: sort_by})
         .then((articles) => {
             this.setState({ articles, isLoading: false, err: {} })
-            console.log("state set")
         })
         .catch((err) => {
             this.setState({err, isLoading: false})
@@ -68,11 +64,13 @@ export default class Articles extends Component {
         else return (
                 <div>
                     <h2>Articles</h2>
-                    <nav> Sort By: <br></br>
-                        <button onClick={() => {this.fetchContent("created_at")}}>Date Created</button> 
-                        <button onClick={() => {this.fetchContent("comment_count")}}>Most Commented</button> 
-                        <button onClick={() => {this.fetchContent("votes")}}>Votes</button>
-                    </nav>
+                    
+                    <Sorter 
+                    createdAtSortFunc={() => {this.fetchContent("created_at")}}
+                    commentCountSortFunc={() => {this.fetchContent("comment_count")}}
+                    votesSortFunc={() => {this.fetchContent("votes")}}
+                    />
+                    
                     <ul className="articlesList">
                         {this.state.articles.map((article) => {
                             return <Link to={`/articles/${article.article_id}`} key={article.article_id} className="articlesLink">

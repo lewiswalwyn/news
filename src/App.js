@@ -13,7 +13,12 @@ import './App.css'
 class App extends Component {
 
   state = {
-    user: "jessjelly"
+    user: "jessjelly",
+    usersList: ["jessjelly", "grumpy19", "cooljmessy", "weegembump", "tickle122", "happyamy2016"]
+  }
+
+  switchUser = (user) => {
+      this.setState({user: user})
   }
 
   render() {
@@ -31,7 +36,7 @@ class App extends Component {
           <SingleArticle path='/articles/:id' user={user}/>
           <Topics path='/topics' user={user}/>
           <Articles path='/topics/:topic' user={user}/>
-          <LoginPage path='/login' user={user}/>
+          <LoginPage path='/login' user={user} usersList={this.state.usersList} switchUser={this.switchUser}/>
           <ErrorDisplayer default />
         </Router>
       </div>

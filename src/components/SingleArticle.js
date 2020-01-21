@@ -15,7 +15,7 @@ export default class SingleArticle extends Component {
         isLoading: true,
         newComment: '',
         err: '',
-        noComment: false
+        noComment: false,
     }
 
     componentDidMount() {
@@ -87,16 +87,16 @@ export default class SingleArticle extends Component {
 
     articleVoteChange = (articleID, direction) => {
 
-        // if(direction === 1) {
-        //     this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
-        //     } 
-        // else if(direction === -1) {
-        //     this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
-        //     } 
+        if(direction === 1) {
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
+            } 
+        else if(direction === -1) {
+            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
+            } 
 
-        const nuVotes = this.state.article.votes + direction
+        // const nuVotes = this.state.article.votes + direction
 
-        this.setState((prevState) => { return {...prevState, [prevState.article.votes]: nuVotes}})
+        // this.setState((prevState) => { return {...prevState, [prevState.article.votes]: nuVotes}})
   
         api.updateArticleVotes(articleID, direction)
         .catch(() => {
@@ -137,18 +137,8 @@ export default class SingleArticle extends Component {
                     newComment={this.state.newComment} 
                     noComment={this.state.noComment} 
                     ifNoComment={this.ifNoComment}
+                    user={this.props.user}
                     />
-{/* 
-                    <h3>Post Comment:</h3>
-                    <form onSubmit={this.handleSubmit}>
-                    <input type="text" onChange={this.handleChange} value={this.state.newComment} placeholder="comment here" className="CommentInput"></input>
-                    <br></br>
-                    {this.state.noComment ? <p text-align="left"><i>you must fill in the box first</i></p>: null}
-
-                    <button type="submit" className="SubmitCommentButton" onClick={!this.state.newComment.length ? this.ifNoComment: null} 
-                    >submit</button>
-                    </form> */}
-
 
                     <h3>Comments:</h3>
                     <ul className="commentsList">
