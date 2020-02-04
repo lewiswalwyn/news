@@ -1,123 +1,135 @@
 div {
-    font-family: 'Roboto Slab', serif;
+  font-family: "Roboto Slab", serif;
 }
 
-.articlesList, .articlesList:visited, .articlesList:active {
-    list-style-type: none;
-    color: black
+.articlesList,
+.articlesList:visited,
+.articlesList:active {
+  list-style-type: none;
+  color: black;
 }
 
-.articlesLink, .articlesLink:visited, .articlesLink:active {
-    list-style-type: none;
-    text-decoration: none;
-    color: black;
-    background-color: white;
-    transition: 0.1s ease;
+.articlesLink,
+.articlesLink:visited,
+.articlesLink:active {
+  list-style-type: none;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  transition: 0.1s ease;
 }
 
 .commentsList {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .articlesLink:hover {
-    color: black;
-    background-color: rgb(237, 237, 237);
-    font-size: x-large;
-    transition: 0.4s ease;
+  color: black;
+  background-color: rgb(237, 237, 237);
+  font-size: x-large;
+  transition: 0.4s ease;
 }
-
 
 .topicsList {
-    list-style-type: none;
-    color: black
+  list-style-type: none;
+  color: black;
 }
 
-.topicsListItem, .topicsListItem:visited, .topicsListItem:active {
-    list-style-type: none;
-    text-decoration: none;
-    color: black;
-    background-color: white;
-    transition: 0.1s ease;
+.topicsListItem,
+.topicsListItem:visited,
+.topicsListItem:active {
+  list-style-type: none;
+  text-decoration: none;
+  color: black;
+  background-color: white;
+  transition: 0.1s ease;
 }
 
 .topicsListItem:hover {
-    color: black;
-    background-color: rgb(237, 237, 237);
-    font-size: x-large;
-    transition: 0.3s ease;
+  color: black;
+  background-color: rgb(237, 237, 237);
+  font-size: x-large;
+  transition: 0.3s ease;
 }
 
 .ArticleText {
-    text-align: left;
+  text-align: left;
 }
 
 .CommentInput {
-    width: 30%;
+  width: 30%;
 }
 
 .SubmitCommentButton {
-    width: 30%;
+  width: 30%;
 }
 
-
-
-
-
+.SubmitCommentButton :visited {
+  width: 30%;
+}
 
 .dropbtn {
-    background-color: white;
-    color: black;
-    padding: 16px;
-    font-size: 16px;
-    border: none;
-    width: 100vw;
-    transition: 0.2s;
-    outline-style:none;
+  background-color: white;
+  color: black;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  width: 100vw;
+  transition: 0.2s;
+  outline-style: none;
 }
 
 .dropdown {
-    position: relative;
-    display: inline-block;
-    transition: 0.7s;
-    outline-style:none;
-    width: 100vw;
+  position: relative;
+  display: inline-block;
+  transition: 0.7s;
+  outline-style: none;
+  width: 100vw;
 }
 
 .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: white;
-    min-width: 200px;
-    width: 100vw;
-    transition: 0.7s;
-    outline-style:none;
+  display: none;
+  position: absolute;
+  background-color: white;
+  min-width: 200px;
+  width: 100vw;
+  transition: 0.7s;
+  outline-style: none;
 }
 
 .dropdown-content button {
-    color: black;
-    padding: 12px 12px;
-    text-decoration: none;
-    display: block;
-    width: 100vw;
-    transition: 0.7s;
-    outline-style:none;
+  color: black;
+  padding: 12px 12px;
+  text-decoration: none;
+  display: block;
+  width: 100vw;
+  transition: 0.7s;
+  outline-style: none;
 }
 
 .dropdown-content button:hover {
-    transition: 0.7s;
-    background-color: black;
-    color: white;
-    width: 100vw;
+  transition: 0.7s;
+  background-color: black;
+  color: white;
+  width: 100vw;
 }
 .dropdown:hover .dropdown-content {
-    display: block;
-    transition: 0.7s;
-    width: 100vw;
+  display: block;
+  transition: 0.7s;
+  width: 100vw;
 }
 .dropdown:hover .dropbtn {
-    background-color: black;
-    color: white;
-    transition: 0.2s;
-    outline-style:none;
-    width: 100vw;
+  background-color: black;
+  color: white;
+  transition: 0.2s;
+  outline-style: none;
+  width: 100vw;
+}
+
+h2 {
+  padding-left: 1rem;
+}
+
+.comments {
+  padding-left: 1rem;
 }

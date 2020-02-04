@@ -1,40 +1,44 @@
 .container {
-    width: 210px;
-    height: 30px;
-    display: grid;
-    grid-template-columns: "150px 30px 30px";
-    grid-template-rows: "30px 30px";
-    grid-template-areas: 
+  width: 210px;
+  height: 30px;
+  display: grid;
+  grid-template-columns: "150px 30px 30px";
+  grid-template-rows: "30px 30px";
+  grid-template-areas:
     "a b c"
     "d d d";
-    text-align: center;
-    border-radius: 1px;
-    padding: 0px 0px 50px 0px;
+  text-align: center;
+  border-radius: 1px;
+  padding: 0px 0px 50px 0px;
 }
 
 .votecount {
-    font-family: 'Montserrat', sans-serif;
-    margin: auto;
-    height: 30px;
-    width: 140px;
-    padding: 5px 0px 0px 0px;
-    grid-area: a;
+  font-family: "Montserrat", sans-serif;
+  margin: auto;
+  height: 30px;
+  width: 140px;
+  padding: 5px 0px 0px 0px;
+  grid-area: a;
 }
 
 .up {
-    height: 30px;
-    width: 30px;
-    grid-area: b;
+  height: 30px;
+  width: 30px;
+  grid-area: b;
 }
 
 .down {
-    height: 30px;
-    width: 30px;
-    grid-area: c;
+  height: 30px;
+  width: 30px;
+  grid-area: c;
 }
 
 p {
-    grid-area: d;
-    text-align: left;
-    vertical-align: top;
+  grid-area: d;
+  text-align: left;
+  vertical-align: top;
+}
+
+.voted {
+  grid-area: b;
 }

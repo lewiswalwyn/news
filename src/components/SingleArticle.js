@@ -1,164 +1,84 @@
-import React, { Component } from 'react'
-import axios from 'axios'
-import Loading from './Loading'
-import BallotBox from './BallotBox'
-import * as api from '../api'
-import '../App.css'
-import ErrorDisplayer from './ErrorDisplayer'
-import CommentBox from './CommentBox'
+import React, { Component } from "react";
+import Loading from "./Loading";
+import BallotBox from "./BallotBox";
+import * as api from "../api";
+import "../App.css";
+import ErrorDisplayer from "./ErrorDisplayer";
+import Comments from "./Comments";
 
 export default class SingleArticle extends Component {
+  state = {
+    article: {},
+    isLoading: true,
+    newComment: "",
+    err: "",
+    noComment: false
+  };
 
-    state = {
-        article: {},
-        comments: [],
-        isLoading: true,
-        newComment: '',
-        err: '',
-        noComment: false,
-    }
+  componentDidMount() {
+    api
+      .fetchContent(this.props.id)
+      .then(article => {
+        this.setState({ article, isLoading: false });
+      })
+      .catch(err => {
+        this.setState({ err, isLoading: false });
+        console.dir(err);
+      });
+  }
 
-    componentDidMount() {
-        this.fetchContent()
-        this.fetchComments()
-    }
+  articleVoteChange = (articleid, direction) => {
+    this.setState(prevState => {
+      return {
+        article: {
+          ...prevState.article,
+          votes: prevState.article.votes + direction
+        },
+        articleVoted: true
+      };
+    });
+    api.updateArticleVotes(articleid, direction).catch(() => {
+      this.setState(prevState => {
+        return {
+          article: {
+            ...prevState.article,
+            votes: prevState.article.votes - direction
+          },
+          articleVoted: false
+        };
+      });
+    });
+  };
 
-    fetchContent() {
-        return axios.get(`https://lewis-nc-news.herokuapp.com/api/articles/${this.props.id}`)
-        .then(({data}) => {
-            return data.article
-        })
-        .then((article) => {
-            this.setState({ article })
-            this.setState({ isLoading: false})
-        })
-        .catch((err) => {
-            this.setState({ err, isLoading: false })
-            console.dir(err)
-        })
-    }
+  render() {
+    const { isLoading, err, article } = this.state;
 
-    fetchComments() {
-        return axios.get(`https://lewis-nc-news.herokuapp.com/api/articles/${this.props.id}/comments`)
-        .then(({data}) => {
-            return data.comments
-        })
-        .then((comments) => {
-            this.setState({ comments })
-        })
-        .catch((err) => {
-                this.setState({err, isLoading: false})
-        })
-    }
+    if (isLoading === true) {
+      return <Loading />;
+    } else if (this.state.err.response) {
+      return <ErrorDisplayer err={err} />;
+    } else
+      return (
+        <div style={{ "padding-left": "1rem" }}>
+          <h2>{article.title}</h2>
+          <p className="ArticleText">{article.body}</p>
 
-    handleChange = (event) => {
-       this.setState({newComment: event.target.value})
-    }
+          <br></br>
 
-    handleSubmit = (event) => {
-        event.preventDefault()
-        api.postComment(this.props.user, this.state.newComment, this.state.article.article_id)
-        .then(response => {
-             this.setState(prevState => ({ comments: [response, ...prevState.comments], newComment: '' }))
-        })
-    }
+          <BallotBox
+            currID={article.article_id}
+            votes={article.votes}
+            func={this.articleVoteChange}
+          />
 
-    handleDelete = (commentid) => {
+          <br></br>
 
-        api.deleteComment(commentid)
-
-        const nuComments = [...this.state.comments]
-        this.setState({comments: nuComments.filter(comment => comment.comment_id !== commentid)})
-    }
-
-    commentVoteChange = (commentID, direction) => {
-
-        const commentIndex = this.state.comments.indexOf(this.state.comments.find(comment => comment.comment_id === commentID))
-
-        if(direction === 1) {
-            this.setState(prevState => { return { [prevState.comments[commentIndex].votes]: prevState.comments[commentIndex].votes++ }})
-            } 
-        else if(direction === -1) {
-            this.setState(prevState => { return { [prevState.comments[commentIndex].votes]: prevState.comments[commentIndex].votes-- }})
-            } 
-
-        api.updateCommentVotes(commentID, direction)
-    }
-
-    articleVoteChange = (articleID, direction) => {
-
-        if(direction === 1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes++, articleVoted: true }})
-            } 
-        else if(direction === -1) {
-            this.setState(prevState => { return { [prevState.article.votes]: prevState.article.votes--, articleVoted: true }})
-            } 
-
-        // const nuVotes = this.state.article.votes + direction
-
-        // this.setState((prevState) => { return {...prevState, [prevState.article.votes]: nuVotes}})
-  
-        api.updateArticleVotes(articleID, direction)
-        .catch(() => {
-            // OI do something to undo the optimistic rendering if this function fails!!
-        })
-
-    }
-
-    ifNoComment = () => {
-        this.setState({noComment: true});
-    }
-
-
-
-
-
-
-    render() {
-        if (this.state.isLoading === true) {
-            return <Loading />
-        }
-
-        else if (this.state.err.response) {
-            return <ErrorDisplayer err={this.state.err}/>
-        }
-
-        else return (
-                <div>
-                    <h2>{this.state.article.title}</h2>
-                    <p class="ArticleText">{this.state.article.body}</p>
-                    <br></br>
-                    <BallotBox currID={this.state.article.article_id} votes={this.state.article.votes} func={this.articleVoteChange} />
-                    <br></br>
-
-                    <CommentBox 
-                    handleSubmit={this.handleSubmit} 
-                    handleChange={this.handleChange} 
-                    newComment={this.state.newComment} 
-                    noComment={this.state.noComment} 
-                    ifNoComment={this.ifNoComment}
-                    user={this.props.user}
-                    />
-
-                    <h3>Comments:</h3>
-                    <ul className="commentsList">
-                        {this.state.comments.map((comment) => {
-                            return <li key={comment.comment_id}>
-                                    <b>{comment.author}</b>
-                                    <br></br>
-                                    - <i>{comment.body}</i>
-                                    <br></br>
-                                    <BallotBox currID={comment.comment_id} votes={comment.votes} func={this.commentVoteChange}/>
-                                    <br></br>
-                                    {comment.author === this.props.user && <button onClick={() => this.handleDelete(comment.comment_id)} commentID={comment.comment_id}>△ delete your comment △</button>}  
-                                    <br></br>
-                                    <br></br>
-                                </li>
-                            })
-                        }
-                    </ul>
-                </div>
-            )
-        }
-    }
-
+          <Comments
+            className="comments"
+            id={this.props.id}
+            user={this.props.user}
+          />
+        </div>
+      );
+  }
+}

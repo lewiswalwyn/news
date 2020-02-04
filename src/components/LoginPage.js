@@ -1,17 +1,17 @@
-import React, { Component } from 'react'
+import React from 'react'
 import './LoginPage.css'
 
-export default class LoginPage extends Component {
-    render() {
+export default function LoginPage(props) {
+    
         return (
             <div>
-                <h1 >you are logged in as {this.props.user}</h1>
+                <h1 >you are logged in as {props.user}</h1>
 
-                <div class="dropdown">
-                    <button class="dropbtn">user ▽</button>
-                    <div class="dropdown-content">
-                        {this.props.usersList.map(user => {
-                            return <button onClick={() => {this.props.switchUser(user)}}>
+                <div className="dropdown">
+                    <button className="dropbtn">user ▽</button>
+                    <div className="dropdown-content">
+                        {props.usersList.map(user => {
+                            return <button key={user} onClick={() => {props.switchUser(user)}}>
                                 {user}
                                 </button>
                         })}
@@ -20,5 +20,5 @@ export default class LoginPage extends Component {
 
             </div>
         )
-    }
+    
 }
